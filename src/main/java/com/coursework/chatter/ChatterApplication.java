@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChatterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChatterApplication.class, args);
+//		SpringApplication.run(ChatterApplication.class, args);
+		System.out.println("nuhb");
 	}
 
 }

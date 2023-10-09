@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChatterApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ChatterApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ChatterApplication.class, args);
+        System.out.println("Hello World!");
+    }
 
 }

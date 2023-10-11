@@ -1,9 +1,11 @@
+# Java and Maven related
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# IDEs and Editors related
 ### STS ###
 .apt_generated
 .classpath
@@ -25,9 +27,14 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Build related
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Environment variables
+.env

@@ -2,7 +2,7 @@ package com.coursework.chatter.config;
 
 
 
-import com.coursework.chatter.dto.MessageService;
+import com.coursework.chatter.dto.ChatMessage;
 import com.coursework.chatter.util.MessageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class WebSocketEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
             log.info("user disconnected: {}", username);
-            var chatMessage = MessageService.builder()
+            var chatMessage = ChatMessage.builder()
                     .type(MessageType.LEAVE)
                     .sender(username)
                     .build();

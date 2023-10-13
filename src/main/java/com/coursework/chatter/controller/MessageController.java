@@ -1,6 +1,6 @@
 package com.coursework.chatter.controller;
 
-import com.coursework.chatter.dto.MessageService;
+import com.coursework.chatter.dto.ChatMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -13,16 +13,16 @@ public class MessageController {
 
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/public")
-    public MessageService sendMessage(
-            @Payload MessageService chatMessage
+    public ChatMessage sendMessage(
+            @Payload ChatMessage chatMessage
     ) {
         return chatMessage;
     }
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public MessageService addUser(
-            @Payload MessageService chatMessage,
+    public ChatMessage addUser(
+            @Payload ChatMessage chatMessage,
             SimpMessageHeaderAccessor headerAccessor
     ) {
 

@@ -1,7 +1,6 @@
 package com.coursework.chatter.repository;
 
-
-import com.coursework.chatter.entity.User;
+import com.coursework.chatter.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,11 +16,7 @@ import java.util.Optional;
  * 70% reduction in code
  * Minimise boilerplate code
  */
-public interface UserRepository extends JpaRepository<User, Long> {
-
-//    optional code added to use on top of the basic CRUD operations
-    Optional<User> findByUsername(String username);
-    Optional<User> findByEmail(String email);
-    Optional<User> findByUsernameOrEmail(String username, String email);
-
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(String name);
 }
+

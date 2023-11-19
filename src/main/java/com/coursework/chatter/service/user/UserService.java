@@ -1,7 +1,9 @@
 package com.coursework.chatter.service.user;
-import com.coursework.chatter.dto.UserDto;
+import com.coursework.chatter.entity.User;
+import org.hibernate.service.spi.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /*
@@ -10,9 +12,17 @@ These methods define the operations that your application will support at the se
  */
 
 public interface UserService {
-    UserDto findByUsername(String username);
-    UserDto createUser(UserDto userDto);
-    UserDto updateUser(Long userId, UserDto userDto);
-    void deleteUser(Long userId);
-    List<UserDto> findAllUsers();
+
+    public List<User> getUsers() throws ServiceException;
+
+    public Optional<User> findByUsername(String username) throws ServiceException;
+
+    public void registerUser(User userForm) throws ServiceException;
+
+    public void saveUser(User user) throws ServiceException;
+
+    public void updateUser(User user) throws ServiceException;
+
+    public void deleteUser(User user) throws ServiceException;
+
 }

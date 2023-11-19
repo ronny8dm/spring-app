@@ -158,6 +158,7 @@ button.accent {
     padding: 10px 20px;
     margin: 0;
     border-bottom: 1px solid #f4f4f4;
+    cursor: pointer;
 }
 
 #chat-page ul li p {
@@ -283,5 +284,8 @@ button.accent {
 
     .chat-header h2 {
         font-size: 1.1em;
+    }
+    #chatList li{
+        cursor: pointer;
     }
 }

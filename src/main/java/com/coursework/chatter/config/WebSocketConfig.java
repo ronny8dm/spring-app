@@ -11,15 +11,22 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 
+
+    // /ws is the HTTP URL for the endpoint to which a WebSocket (or SockJS) client needs to connect for the WebSocket handshake.
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").withSockJS();
     }
 
+
+
+    // STOMP messages whose destination header begins with /app are routed to @MessageMapping methods in @Controller classes.
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/topic", "/user");
+        registry.setUserDestinationPrefix("/user");
+
     }
 
 }

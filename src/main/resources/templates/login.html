@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sign In</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css?version=51">
 </head>
 <body>
+<div class="form-container">
+    <h1>Sign In</h1>
 
+
+    <div id="message-container" style="display: none;">
+        <div class="message"></div>
+    </div>
+
+    <div id="error-container" style="display: none;">
+        <div class="error-message"></div>
+    </div>
+
+
+    <form name='login' action="/login" method='POST'>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Sign In">
+
+        <!-- CSRF token-->
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+    <div class="bottom-text">
+        <span>Don't have an account?</span> <a href="/signup">Sign Up</a>
+    </div>
+</div>
 </body>
 </html>

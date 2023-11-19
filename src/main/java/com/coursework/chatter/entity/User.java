@@ -1,45 +1,51 @@
 package com.coursework.chatter.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import java.time.LocalDateTime;
-
-
-// TODO: 11/10/2023 THIS IS AN EXAMPLE FOR USER ENTITY
-
-/*
-This communicates with the database and is used to store user information.
-This talking with the DTO and the Service layer.
-
-Separation of Concerns:
-
-Entity: Represents the data structure as it is in the database and is used to interact with it.
-DTO: Represents how the data is communicated between the API and the outside world (e.g., frontend, other APIs).
-Data Encapsulation:
-
-Entity: Might contain sensitive or internal data that should not be exposed outside.
-DTO: Ensures that only the necessary data is exposed to the user or client applications.
-Flexibility:
-
-Entity: Changes in the entity might require database migrations and can be costly.
-DTO: Can be changed without affecting the database layer, providing flexibility in what data is transferred.
- */
-
-
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "username", unique = true)
+    @NotEmpty(message = "Username cannot be empty")
+    @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     private String username;
-    private String email;
-    private String password; // hashed password
-    private Boolean isActive;
-    private LocalDateTime createdAt;
 
+    @Column(name = "password")
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    private String password;
+
+    @Column(name = "email")
+    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Transient
+    private String confirmPassword;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Role> role = new HashSet<>();
+
+    public User() {
+    }
+
+    public User(String username, String password, String email, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.enabled = enabled;
+    }
 
     public String getUsername() {
         return username;
@@ -49,6 +55,24 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+
     public String getEmail() {
         return email;
     }
@@ -57,37 +81,24 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public Boolean getActive() {
-        return isActive;
+    public Set<Role> getRole() {
+        return role;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+
+    @Override
+    public String toString() {
+        return "User [username=" + username + ", password=" + password + ", email=" + email + ", enabled=" + enabled
+                + ", authorities=" + role + "]";
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
-    // getters and setters
 

@@ -8,6 +8,7 @@ var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
+var chatContainer = document.querySelector('.chat-container');
 
 var stompClient = null;
 var username = null;
@@ -161,7 +162,11 @@ function onPrivateMessage(payload){
 
     var messageElement = document.createElement('li');
     var existingUserTab = document.getElementById('user-' + message.sender);
+    var sender = message.sender;
 
+    if(message.sender === sender) {
+
+    }
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
@@ -182,6 +187,12 @@ function onPrivateMessage(payload){
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
+
+        chatContainer = document.getElementById(`chat-container-${message.sender}`);
+        if (!chatContainer) {
+            onPrivateChat(message.sender);
+            chatContainer = document.getElementById(`chat-container-${message.sender}`);
+        }
     }
 
     console.log(message.sender)
@@ -195,14 +206,52 @@ function onPrivateMessage(payload){
         chatList.appendChild(userTab);
     }
 
+
     var textElement = document.createElement('p');
     var messageText = document.createTextNode(message.content);
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);
 
-    messageArea.appendChild(messageElement);
-    messageArea.scrollTop = messageArea.scrollHeight;
+    var messageArea = chatContainer.querySelector('.message-area');
+    if (messageArea) {
+        messageArea.appendChild(messageElement);
+        messageArea.scrollTop = messageArea.scrollHeight;
+    }
+}
+
+function onPrivateChat(username){
+    var newChatContainer = document.createElement('div');
+    newChatContainer.id = `chat-container-${username}`;
+    newChatContainer.classList.add('chat-container');
+
+    messageArea.id = `messageArea-${username}`;
+    newChatContainer.appendChild(messageArea);
+    newChatContainer.appendChild(messageForm);
+
+    chatPage.appendChild(newChatContainer);
+
+    newChatContainer.style.display = 'none';
+
+}
+
+
+function onUserTabClick(event) {
+    var clickedUser = event.target.textContent;
+    userData.receiver = clickedUser;
+
+    var chatContainer = document.getElementById(`chat-container-${clickedUser}`);
+    if (!chatContainer) {
+        onPrivateChat(clickedUser);
+    }
+
+    var allChatContainers = document.querySelectorAll('.chat-container');
+    allChatContainers.forEach(container => container.style.display = 'none');
+
+    chatContainer = document.getElementById(`chat-container-${clickedUser}`);
+    if (chatContainer) {
+        chatContainer.style.display = 'block';
+    }
 }
 
 function getAvatarColor(messageSender) {
@@ -216,3 +265,8 @@ function getAvatarColor(messageSender) {
 
 usernameForm.addEventListener('submit', connect, true)
 messageForm.addEventListener('submit', sendPrivateMessage, true)
+chatList.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() === 'li') {
+        onUserTabClick(event);
+    }
+});

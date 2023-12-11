@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "user_roles")
 public class UserRole {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne

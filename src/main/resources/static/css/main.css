@@ -28,7 +28,7 @@ body {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 .form-control {
@@ -140,6 +140,22 @@ button.accent {
     overflow-y: auto;
     position: relative;
 }
+
+.chat-container-private {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    margin-top: 30px;
+    height: calc(100% - 60px);
+    max-height: 600px;
+    width: 70%;
+    overflow-y: auto;
+    position: relative;
+}
+
+
 
 .list-container {
     width: 30%;
